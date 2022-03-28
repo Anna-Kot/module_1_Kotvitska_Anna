@@ -8,11 +8,20 @@ const store = function() {
 
 (() => {
     const currentDate = localStorage.getItem('currentDate');
-    let searchData = currentDate;
+    let searchData;
     if (!currentDate) {
         document.getElementById('start').valueAsDate = new Date();
         searchData = document.getElementById('start').value.replace(/-/g, "");
     }
+    else {
+        searchData = currentDate;
+    }
+    console.log(searchData);
+    let year = searchData.slice(0, 4);
+    let month = searchData.slice(4,6);
+    let day = searchData.slice(6, 8);
+    // console.log(year, month, day);
+    document.getElementById('start').value = year + '-' + month + '-' + day;
     
     fetchExchangeData(searchData);
 })()
