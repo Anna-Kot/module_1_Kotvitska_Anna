@@ -13,6 +13,7 @@
         <label for="start">Виберіть дату:</label>
         <input type="date" id="start" name="trip-start" >
         <!-- <input placeholder="Search" id="search" class="form-control mb-3"> -->
+        <!-- <table class="table table-striped table-bordered"> -->
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -26,6 +27,13 @@
 
             </tbody>
         </table>
+
+        <form name="convert" >
+            <label for="number">Конвектор валюти:</label>
+            <input type="number" min="1" id="number" id="inputNumber" class="form-control  col-md-4">
+            <select name="countryConvert"  id="inputState" class="form-control  col-md-4"></select>
+            <button type="button" name="send" class="btn btn-outline-secondary">Convert</button>
+        </form>
     </div>
     <script src="app.js"></script>
 </body>

@@ -25,6 +25,10 @@ const store = function() {
     
     fetchExchangeData(searchData);
 })()
+// (() => {
+//     let rate = document.querySelector('select').value;
+//     fetchExchangeData(searchData);
+// })()
 
 function renderExchangeRate(exchangeRate) {
     let htmlStr = '';
@@ -37,6 +41,15 @@ function renderExchangeRate(exchangeRate) {
             </tr>`
     }
     document.querySelector('.table tbody').innerHTML = htmlStr;
+}
+function renderCountryRate(countryRate) {
+    let htmlStr = '';
+    for(let currency of countryRate) {
+        htmlStr += `<tr>
+                <option>${currency.capital}</option>
+            </tr>`
+    }
+    document.querySelector('form select').innerHTML = htmlStr;
 }
 
 
@@ -56,7 +69,12 @@ function fetchExchangeData(searchData) {
                 rate: currency.rate,
                 exchangedate: currency.exchangedate,
             }));
+            let mappedCountryRate = data.map (currency => ({
+                capital: currency.txt,
+                rate: currency.rate,
+            }))
             store.setData(mappedExchangeRate);
             renderExchangeRate(mappedExchangeRate);
+            renderCountryRate(mappedCountryRate);
         });
 }
