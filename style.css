@@ -26,4 +26,13 @@ thead {
     position: sticky;
     top: 0;
     background: white;
-  }
+}
+.flexBlock {
+    display: flex;
+    flex-direction: row;
+}
+h3 {
+    font-size: 23px;
+    color: #2591b1;
+    margin: 7px 50px 0 50px;
+}

@@ -46,31 +46,11 @@ function renderCountryRate(countryRate) {
             </tr>`
     }
     document.querySelector('form select').innerHTML = htmlStr;
-    
 }
-function setListeners(mappedCountryRate) {
-    document.getElementById('convert').onclick = () => {
-        let selectedNumber = document.getElementById('inputNumber').value;
-        console.log(selectedNumber);
-        let selectedValue = document.querySelector('form select').value;
-        console.log(selectedValue);
-        console.log(mappedCountryRate);
-        let filteredCurrencies = mappedCountryRate.filter(currency => {
-            return currency.capital === selectedValue;
-        });
-        console.log(filteredCurrencies[0].rate);
-        let valute = filteredCurrencies[0].rate;
-        let result = selectedNumber*valute;
-        result = result.toFixed(2);
-        console.log(result);
-        let htmlH3 = 'Result:   ' + result;
-        document.querySelector('h3').innerHTML = htmlH3;
-    }
-}
+
 
 document.getElementById('start').oninput = e => {
     const searchData = e.currentTarget.value.replace(/-/g, "");
-    console.log(searchData);
     localStorage.setItem('currentDate', searchData);
     fetchExchangeData(searchData);
 }
@@ -90,9 +70,7 @@ function fetchExchangeData(searchData) {
                 rate: currency.rate,
             }))
             store.setData(mappedExchangeRate);
-            console.log(mappedCountryRate);
             renderExchangeRate(mappedExchangeRate);
             renderCountryRate(mappedCountryRate);
-            setListeners(mappedCountryRate);
         });
 }

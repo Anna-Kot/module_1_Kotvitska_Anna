@@ -29,11 +29,15 @@
         </table>
 
         <form name="convert" >
-            <label for="number">Конвектор валюти:</label>
-            <input type="number" min="1" id="number" id="inputNumber" class="form-control  col-md-4">
+            <label for="number">Currency converter:</label>
+            <input type="number" min="1" id="inputNumber" class="form-control  col-md-4" value="1">
             <select name="countryConvert"  id="inputState" class="form-control  col-md-4"></select>
-            <button type="button" name="send" class="btn btn-outline-secondary">Convert</button>
+            <div class="flexBlock">
+                <button type="button" id="convert" name="send" class="btn btn-outline-secondary">Convert</button>
+            <h3></h3>
+            </div>
         </form>
+        
     </div>
     <script src="app.js"></script>
 </body>

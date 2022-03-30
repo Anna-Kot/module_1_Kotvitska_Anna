@@ -22,10 +22,24 @@ const store = function() {
     let day = searchData.slice(6, 8);
     // console.log(year, month, day);
     document.getElementById('start').value = year + '-' + month + '-' + day;
+
+    // let rate = document.querySelector('form select').value;
+    // console.log(rate);
     
     fetchExchangeData(searchData);
 })()
+// (() => {
+//     let rate = document.querySelector('select').value;
+//     fetchExchangeData(searchData);
+// })()
+let mySelectOption = getValue; // - полученное из функции значение прсвоим в переменную и используем где нужно))
 
+function getValue(){
+let selectedValue = document.querySelector('form select').value;
+// const result = words.filter(word => word.length > 6);
+console.log(selectedValue);
+return selectedValue;
+}
 function renderExchangeRate(exchangeRate) {
     let htmlStr = '';
     for(let currency of exchangeRate) {
@@ -46,31 +60,11 @@ function renderCountryRate(countryRate) {
             </tr>`
     }
     document.querySelector('form select').innerHTML = htmlStr;
-    
 }
-function setListeners(mappedCountryRate) {
-    document.getElementById('convert').onclick = () => {
-        let selectedNumber = document.getElementById('inputNumber').value;
-        console.log(selectedNumber);
-        let selectedValue = document.querySelector('form select').value;
-        console.log(selectedValue);
-        console.log(mappedCountryRate);
-        let filteredCurrencies = mappedCountryRate.filter(currency => {
-            return currency.capital === selectedValue;
-        });
-        console.log(filteredCurrencies[0].rate);
-        let valute = filteredCurrencies[0].rate;
-        let result = selectedNumber*valute;
-        result = result.toFixed(2);
-        console.log(result);
-        let htmlH3 = 'Result:   ' + result;
-        document.querySelector('h3').innerHTML = htmlH3;
-    }
-}
+
 
 document.getElementById('start').oninput = e => {
     const searchData = e.currentTarget.value.replace(/-/g, "");
-    console.log(searchData);
     localStorage.setItem('currentDate', searchData);
     fetchExchangeData(searchData);
 }
@@ -88,11 +82,16 @@ function fetchExchangeData(searchData) {
             let mappedCountryRate = data.map (currency => ({
                 capital: currency.txt,
                 rate: currency.rate,
-            }))
-            store.setData(mappedExchangeRate);
+            }));
+            let mappedCountryRateNeed = data.filter (currency => currency.value);
             console.log(mappedCountryRate);
+            console.log(mappedCountryRateNeed);
+            // let rate = document.querySelector('form select').value;
+            // console.log(rate);
+            getValue(mappedCountryRateNeed)
+            getValue(mappedCountryRate)
+            store.setData(mappedExchangeRate);
             renderExchangeRate(mappedExchangeRate);
             renderCountryRate(mappedCountryRate);
-            setListeners(mappedCountryRate);
         });
 }
