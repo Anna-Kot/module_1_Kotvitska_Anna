@@ -11,7 +11,7 @@ const store = function() {
     let searchData;
     if (!currentDate) {
         document.getElementById('start').valueAsDate = new Date();
-        searchData = document.getElementById('start').value.replace(/-/g, "");
+        searchData = document.getElementById('start').value.slice(0, 4) + document.getElementById('start').value.slice(5, 7) + document.getElementById('start').value.slice(8);;
     }
     else {
         searchData = currentDate;
@@ -69,7 +69,7 @@ function setListeners(mappedCountryRate) {
 }
 
 document.getElementById('start').oninput = e => {
-    const searchData = e.currentTarget.value.replace(/-/g, "");
+    const searchData = e.currentTarget.value.slice(0, 4) + e.currentTarget.value.slice(5, 7) + e.currentTarget.value.slice(8);
     console.log(searchData);
     localStorage.setItem('currentDate', searchData);
     fetchExchangeData(searchData);
