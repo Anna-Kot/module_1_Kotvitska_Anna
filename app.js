@@ -64,8 +64,8 @@ function setListeners(mappedCountryRate) {
     }
 }
 
-document.getElementById('start').oninput = e => {
-    const searchData = e.currentTarget.value.slice(0, 4) + e.currentTarget.value.slice(5, 7) + e.currentTarget.value.slice(8, 10);
+document.getElementById('start').oninput = event => {
+    const searchData = event.currentTarget.value.slice(0, 4) + e.currentTarget.value.slice(5, 7) + e.currentTarget.value.slice(8, 10);
     console.log(searchData);
     localStorage.setItem('currentDate', searchData);
     fetchExchangeData(searchData);
