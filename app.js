@@ -11,17 +11,13 @@ const store = function() {
     let searchData;
     if (!currentDate) {
         document.getElementById('start').valueAsDate = new Date();
-        searchData = document.getElementById('start').value.slice(0, 4) + document.getElementById('start').value.slice(5, 7) + document.getElementById('start').value.slice(8);;
+        searchData = document.getElementById('start').value.slice(0, 4) + document.getElementById('start').value.slice(5, 7) + document.getElementById('start').value.slice(8, 10);
     }
     else {
         searchData = currentDate;
     }
     console.log(searchData);
-    let year = searchData.slice(0, 4);
-    let month = searchData.slice(4,6);
-    let day = searchData.slice(6, 8);
-    // console.log(year, month, day);
-    document.getElementById('start').value = year + '-' + month + '-' + day;
+    document.getElementById('start').value = searchData.slice(0, 4) + '-' + searchData.slice(4,6) + '-' + searchData.slice(6, 8);
     
     fetchExchangeData(searchData);
 })()
@@ -69,7 +65,7 @@ function setListeners(mappedCountryRate) {
 }
 
 document.getElementById('start').oninput = e => {
-    const searchData = e.currentTarget.value.slice(0, 4) + e.currentTarget.value.slice(5, 7) + e.currentTarget.value.slice(8);
+    const searchData = e.currentTarget.value.slice(0, 4) + e.currentTarget.value.slice(5, 7) + e.currentTarget.value.slice(8, 10);
     console.log(searchData);
     localStorage.setItem('currentDate', searchData);
     fetchExchangeData(searchData);
