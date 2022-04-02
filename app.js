@@ -11,7 +11,8 @@ const store = function() {
     let searchData;
     if (!currentDate) {
         document.getElementById('start').valueAsDate = new Date();
-        searchData = document.getElementById('start').value.slice(0, 4) + document.getElementById('start').value.slice(5, 7) + document.getElementById('start').value.slice(8, 10);
+        let dateValue = document.getElementById('start').value;
+        searchData = dateValue.split("-").join("");
     }
     else {
         searchData = currentDate;
@@ -44,29 +45,42 @@ function renderCountryRate(countryRate) {
     document.querySelector('form select').innerHTML = htmlStr;
     
 }
-function setListeners(mappedCountryRate) {
+function setListeners(mappedExchangeRate) {
     document.getElementById('convert').onclick = () => {
         let selectedNumber = document.getElementById('inputNumber').value;
-        console.log(selectedNumber);
+        if (selectedNumber < 1 ) {
+            alert('Введіть додатнє число');
+            document.getElementById('inputNumber').value = 1;
+            selectedNumber = 1;
+        }
         let selectedValue = document.querySelector('form select').value;
         console.log(selectedValue);
-        console.log(mappedCountryRate);
-        let filteredCurrencies = mappedCountryRate.filter(currency => {
+        let filteredCurrencies = mappedExchangeRate.filter(currency => {
             return currency.capital === selectedValue;
         });
-        console.log(filteredCurrencies[0].rate);
         let valute = filteredCurrencies[0].rate;
         let result = selectedNumber*valute;
         result = result.toFixed(2);
-        console.log(result);
+        console.log(selectedNumber + "*" + filteredCurrencies[0].rate + "=" + result);
         let htmlH3 = 'Result:   ' + result;
         document.querySelector('h3').innerHTML = htmlH3;
     }
 }
 
 document.getElementById('start').oninput = event => {
-    const searchData = event.currentTarget.value.slice(0, 4) + event.currentTarget.value.slice(5, 7) + event.currentTarget.value.slice(8, 10);
-    console.log(searchData);
+    let dateValue = event.currentTarget.value;
+    dateValue = dateValue.split("-").join("");
+    let now = new Date().toLocaleDateString();
+    var arr = now.split(".").reverse();
+    console.log(now);
+    console.log(arr);
+    let searchData = dateValue.split("-").join("");
+    if (dateValue > arr.join("")) {
+        document.getElementById('start').value = arr.join("-");
+        searchData = arr.join("");
+        alert("Курс валют відображаться тільки за дати, які вже були або за сьогодні. Виберіть дату, яка підходить!")
+    }
+    console.log(dateValue, searchData);
     localStorage.setItem('currentDate', searchData);
     fetchExchangeData(searchData);
 }
@@ -81,14 +95,10 @@ function fetchExchangeData(searchData) {
                 rate: currency.rate,
                 exchangedate: currency.exchangedate,
             }));
-            let mappedCountryRate = data.map (currency => ({
-                capital: currency.txt,
-                rate: currency.rate,
-            }))
             store.setData(mappedExchangeRate);
-            console.log(mappedCountryRate);
+            // console.log(mappedExchangeRate);
             renderExchangeRate(mappedExchangeRate);
-            renderCountryRate(mappedCountryRate);
-            setListeners(mappedCountryRate);
+            renderCountryRate(mappedExchangeRate);
+            setListeners(mappedExchangeRate);
         });
 }
